@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import html from "../api/config";
+
 export default function FileViewer() {
-  //   const [filenames, setfilenames] = useState([]);
-  //   const mockdata = [
-  //     { name: "john", id: 49 },
-  //     { name: "a", id: 50 },
-  //     { name: "b", id: 51 },
-  //   ];
-  //   setfilenames(mockdata);
-  const filenames = [
-    { name: "john", id: 49 },
-    { name: "a", id: 50 },
-    { name: "b", id: 51 },
-  ];
+  const [filenames, setfilenames] = useState([]);
+  const [directory_path, setdirectory_path] = useState("/");
+
+  useEffect(() => {
+    html
+      .filename_get("api/v1/ls", {
+        directory_path: directory_path,
+        db: "sql",
+      })
+      .then((val) => {
+        console.log(val);
+        setfilenames(val.data.children.map((name, id) => ({ name: name, id: id })));
+      });
+  },[directory_path]);
+
   const navigate = useNavigate();
   return (
     <>
