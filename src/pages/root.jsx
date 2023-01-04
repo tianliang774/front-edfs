@@ -32,6 +32,16 @@ export default function Root() {
                 {<>Fileviewer</>}
               </NavLink>
             </li>
+            <li key="newfile">
+              <NavLink
+                to={`newfile`}
+                className={({ isActive, isPending }) =>
+                  isActive ? "active" : isPending ? "pending" : ""
+                }
+              >
+                {<>NewFile</>}
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>

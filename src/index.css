@@ -380,3 +380,7 @@ i {
   justify-content: center;
   width: 100%;
 }
+
+.listheader{
+  text-align: justify;
+}

@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+import NewFile from "./pages/newfile";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         {
           path:"fileviewer",
           element:<FileViewer/>,
+        },
+        {
+          path:"newfile",
+          element:<NewFile/>,
         }
       ]
     }],

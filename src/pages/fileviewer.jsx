@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { List, Typography, Button } from "antd";
+import { LeftSquareTwoTone } from "@ant-design/icons";
 import html from "../api/config";
 
 export default function FileViewer() {
   const [filenames, setfilenames] = useState([]);
   const [directory_path, setdirectory_path] = useState("/");
-
+  // tracker store the history of the path
+  const [history, sethistory] = useState(["/"]);
   useEffect(() => {
     html
       .filename_get("api/v1/ls", {
@@ -25,7 +27,19 @@ export default function FileViewer() {
   return (
     <>
       <List
-        header={<div>Path:{directory_path}</div>}
+        header={
+          <div className="listheader">
+            Path:{directory_path}
+            <LeftSquareTwoTone
+              style={{ fontSize: "25px", right: "4%", position: "absolute" }}
+              onClick={() => {
+                if (directory_path !== "/")
+                  sethistory(history.slice(1, history.length));
+                setdirectory_path(history[0]);
+              }}
+            />
+          </div>
+        }
         footer={
           <div>
             <button
@@ -49,6 +63,7 @@ export default function FileViewer() {
                   if (directory_path === "/")
                     setdirectory_path(directory_path + item.name);
                   else setdirectory_path(directory_path + "/" + item.name);
+                  sethistory([directory_path].concat(history));
                 }}
               >
                 open
